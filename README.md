@@ -78,7 +78,11 @@ Several reasons why I did this -
 7. Power off the Steam Deck and then proceed to Post Install Instructions.
 
 ## Post Install Instructions
-This will alow SteamOS updates and minimize writes to the sdcard. If you skip this step, you won't be able to perform SteamOS updates, unable to switch between STABLE / BETA / PREVIEW branches, and the precautions I put to minimize writes to the sdcard will not be implemented. The life of the sdcard might degrade quickly if you don't do this step!
+This will alow SteamOS updates and minimize writes to the sdcard. 
+
+If you skip this step, you won't be able to perform SteamOS updates, unable to switch between STABLE / BETA / PREVIEW branches, and the precautions I put to minimize writes to the sdcard will not be implemented. 
+
+The life of the sdcard might degrade quickly if you don't do this step!
 
 The post install script will set the sudo password for the deck account. It will be set as "deck" (without the quotation marks)
 
