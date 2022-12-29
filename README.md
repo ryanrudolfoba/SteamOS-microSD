@@ -38,15 +38,18 @@ Several reasons why I did this -
 7. Connect the Steam Deck to your wifi connection.
 8. Open konsole terminal and clone the repsitory that contains the scripts.
 
-  git clone https://github.com/ryanrudolfoba/SteamOS-microSD.git
+    git clone https://github.com/ryanrudolfoba/SteamOS-microSD.git
+    
+    ![image](https://user-images.githubusercontent.com/98122529/210011557-6ba7290d-96e2-4760-b33c-5c6c5b75c1f7.png)
+
   
 8. Execute the script!
 
-  cd SteamOS-microSD
-  
-  chmod +x install_sdcard.sh
-  
-  sudo ./install_sdcard.sh all
+    cd SteamOS-microSD
+    
+    chmod +x install_sdcard.sh
+    
+    sudo ./install_sdcard.sh all
   
 9. Once the script is done, press CANCEL on the prompt and then power off the Steam Deck.
 
