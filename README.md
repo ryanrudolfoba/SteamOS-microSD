@@ -120,7 +120,7 @@ The post install script will set the sudo password for the deck account. It will
     
     df -h | grep var
     
-4. Verify that swap file TOTAL / USED and FREE shows 0.
+4. Verify that swap file TOTAL / USED / FREE shows 0.
 
     free -h | grep -vi mem
     
@@ -129,3 +129,4 @@ The post install script will set the sudo password for the deck account. It will
 
     mount | grep mmcblk0
 
+6. If everything looks good then the congrats! SteamOS is now installed on your microSD!
