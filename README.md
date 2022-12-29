@@ -77,7 +77,7 @@ Several reasons why I did this -
 6. Once completed the Steam Deck will automatically reboot and launch the OS installed on the internal SSD (Windows or SteamOS).
 7. Power off the Steam Deck and then proceed to Post Install Instructions.
 
-## Post Install Instructions
+## Post Install Instructions - this is very important do not skip this step!
 **If you skip this step, you won't be able to perform SteamOS updates, unable to switch between STABLE / BETA / PREVIEW branches, and the precautions I put to minimize writes to the sdcard will not be implemented.**
 
 **The life of the sdcard might degrade quickly if you don't do this step!**
