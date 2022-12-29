@@ -36,7 +36,7 @@ Several reasons why I did this -
 5. Wait until the SteamOS recovery image boots into the desktop.
 6. Insert the microsd card where SteamOS will be installed - make sure it is at least a 32GB A1 / A2 card.
 7. Connect the Steam Deck to your wifi connection.
-8. Open konsole terminal and clone the repsitory that contains the scripts.
+8. Open konsole terminal and clone the repository that contains the scripts.
 
     git clone https://github.com/ryanrudolfoba/SteamOS-microSD.git
     
