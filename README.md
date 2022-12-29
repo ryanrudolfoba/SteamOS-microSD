@@ -69,16 +69,59 @@ Several reasons why I did this -
 
 
 ## First Boot
-1.
-2.
-3.
-4.
-5.
-
+1. While the Steam Deck is powered off, press the VOLDOWN + POWER button until you hear a chime.
+2. The boot menu will appear, select the microSD where SteamOS is installed and press A button (or enter on the keyboard).
+3. Wait until SteamOS loads. This will take about 1-2minutes depending on the speed of the sdcard.
+4. Perform the initial setup - language, timezone and WiFi connection.
+5. SteamOS will continue with the installation. Wait until this is finished.
+6. Once completed the Steam Deck will automatically reboot and launch the OS installed on the internal SSD (Windows or SteamOS).
+7. Power off the Steam Deck and then proceed to Post Install Instructions.
 
 ## Post Install Instructions
-1. While the Steam Deck is powered off, press the VOLDOWN + POWER button until you hear a chime.
-2.
-3.
-4.
-5.
+This will alow SteamOS updates and minimize writes to the sdcard. If you skip this step, you won't be able to perform SteamOS updates, unable to switch between STABLE / BETA / PREVIEW branches, and the precautions I put to minimize writes to the sdcard will not be implemented. The life of the sdcard might degrade quickly if you don't do this step!
+
+The post install script will set the sudo password for the deck account. It will be set as "deck" (without the quotation marks)
+
+1. While powered off press VOLDOWN + POWER to go back to the boot menu.
+2. Select the microSD where SteamOS is installed and press A button (or enter on the keyboard).
+3. Wait until SteamOS loads. This will take about 1-2minutes depending on the speed of the sdcard.
+4. Perform the initial setup - language, timezone and WiFi connection.
+5. Sign-in screen will appear. Login to your Steam account.
+6. Welcome to Steam Deck / Game Mode will show up!
+7. Press the STEAM button and select Power > Switch to Desktop.
+8. On Desktop Mode, open konsole terminal and clone the repsitory that contains the scripts.
+
+    git clone https://github.com/ryanrudolfoba/SteamOS-microSD.git
+    
+    ![image](https://user-images.githubusercontent.com/98122529/210011557-6ba7290d-96e2-4760-b33c-5c6c5b75c1f7.png)
+
+9. Execute the post install script!
+
+    cd SteamOS-microSD
+    
+    chmod +x post_install_sdcard.sh
+    
+    ./post_install_sdcard.sh
+    
+    
+10. After a few seconds the script will be complete and automatically power off the Steam Deck.
+
+11. Repeat steaps 8 and 9 AFTER performing a SteamOS update, or AFTER switching between STABLE / BETA / PREVIEW builds. If you don't, there's a chance that SteamOS wiped the precautions I put to minimize writes to the sdcard, and future SteamOS updates might fail.
+
+
+## Verification
+1. Boot to Desktop Mode.
+2. Open konsole terminal.
+3. Verify that /var is only mounted once.
+    
+    df -h | grep var
+    
+4. Verify that swap file TOTAL / USED and FREE shows 0.
+
+    free -h | grep -vi mem
+    
+
+5. Verify that the microSD / mmcblk0 is mounted with noatime flag.
+
+    mount | grep mmcblk0
+
