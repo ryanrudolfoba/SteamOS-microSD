@@ -43,15 +43,30 @@ Several reasons why I did this -
     ![image](https://user-images.githubusercontent.com/98122529/210011557-6ba7290d-96e2-4760-b33c-5c6c5b75c1f7.png)
 
   
-8. Execute the script!
+9. Execute the script!
 
     cd SteamOS-microSD
     
     chmod +x install_sdcard.sh
     
     sudo ./install_sdcard.sh all
+    
+    ![image](https://user-images.githubusercontent.com/98122529/210011704-03fe588d-94fd-460e-8a5e-750dce98a7f0.png)
+
   
-9. Once the script is done, press CANCEL on the prompt and then power off the Steam Deck.
+10. Press Proceed on the dialog prompt. Wait until the reimage is complete.
+
+    ![image](https://user-images.githubusercontent.com/98122529/210011817-8d4a2495-8f75-44c3-95cb-2d0769f9d623.png)
+
+11. Reimage in progress. This will take several minutes depending on the speed of the sdcard.
+
+    ![image](https://user-images.githubusercontent.com/98122529/210011958-4aa53d56-ec83-4dca-9a99-814719b10524.png)
+
+12. Once the reimage is complete, press CANCEL on the prompt and then power off the Steam Deck.
+
+    ![image](https://user-images.githubusercontent.com/98122529/210012527-7f5ab7f4-d723-4091-93ec-589200d552a5.png)
+
+
 
 ## First Boot
 1.
