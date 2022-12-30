@@ -107,8 +107,13 @@ Several reasons why I did this -
     
     ./post_install_sdcard.sh
     
+    ![image](https://user-images.githubusercontent.com/98122529/210035947-852151c1-d9dd-4d1f-8827-a3c2172e197c.png)
+
     
 10. After a few seconds the script will be complete and automatically power off the Steam Deck.
+
+    ![image](https://user-images.githubusercontent.com/98122529/210036025-4dea34c7-2ed2-4c8e-960c-4037f676d165.png)
+
 
 11. Repeat steaps 8 and 9 AFTER performing a SteamOS update, or AFTER switching between STABLE / BETA / PREVIEW builds. If you don't, there's a chance that SteamOS wiped the precautions I put to minimize writes to the sdcard, and future SteamOS updates might fail.
 
