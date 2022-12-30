@@ -18,6 +18,7 @@ sudo rm /usr/lib/udev/rules.d/99-sdcard-mount.rules &> /dev/null
 sudo udevadm control --reload
 sudo udevadm trigger
 sudo umount /run/media/var &> /dev/null
+sudo umount /run/media/deck/var &> /dev/null
 sleep 2
 echo sdcard automount udev rule deleted!
 
@@ -30,6 +31,7 @@ do
 	echo \$mountpoint has been remounted with noatime flag.
 done
 sudo swapoff /home/swapfile
+sudo umount /run/media/deck/var &> /dev/null
 EOF
 
 chmod +x ~/.ryanrudolf/sdcard_minimize_write.sh
