@@ -125,16 +125,32 @@ Several reasons why I did this -
     
     df -h | grep var
     
+    ![image](https://user-images.githubusercontent.com/98122529/210036264-fc56e052-7989-4064-a3f4-fa5e4887599d.png)
+
+    
 4. Verify that swap file TOTAL / USED / FREE shows 0.
 
     free -h | grep -vi mem
     
+    ![image](https://user-images.githubusercontent.com/98122529/210036292-ad78e0fe-94f5-4156-b449-9e2afcb89836.png)
+
 
 5. Verify that the microSD / mmcblk0 is mounted with noatime flag.
 
     mount | grep mmcblk0
+    
+    ![image](https://user-images.githubusercontent.com/98122529/210036335-4d50cbe3-e252-46c7-b605-73f6561d3cbb.png)
+
 
 6. If everything looks good then congrats! SteamOS is now installed on your microSD!
 
 ![image](https://user-images.githubusercontent.com/98122529/210017005-6daddcf1-66af-4e69-afbf-364460c7ddd3.png)
 
+
+## Updating from Stable > Beta > Preview
+
+**Stable 3.4.4**
+![image](https://user-images.githubusercontent.com/98122529/210036714-89bfe0e6-6497-46e5-a553-b65c76d624b4.png)
+
+
+![image](https://user-images.githubusercontent.com/98122529/210036657-64f8463d-f644-4f79-84c9-f2deab4ca441.png)
