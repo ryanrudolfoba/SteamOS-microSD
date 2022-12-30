@@ -166,6 +166,7 @@ Several reasons why I did this -
 
 ![image](https://user-images.githubusercontent.com/98122529/210078810-16bf8b5f-5534-4439-891d-5cefcc58eee9.png)
 
-file:///home/deck/.local/share/Steam/userdata/1230708049/760/remote/7/screenshots/20221230085818_1.jpg![image](https://user-images.githubusercontent.com/98122529/210078972-06cb8f9f-234c-4bf9-b725-bede64101cfa.png)
+
+![image](https://user-images.githubusercontent.com/98122529/210078972-06cb8f9f-234c-4bf9-b725-bede64101cfa.png)
 
 
