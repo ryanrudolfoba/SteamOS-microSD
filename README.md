@@ -11,6 +11,7 @@ The script is divided into two parts - modified SteamOS recovery script that ins
 ## Disclaimer
 1. Do this at your own risk!
 2. I will not be held responsible for data loss, broken sdcards etc etc.
+3. This is only for educational and research purposes only.
 
 
 ## But Why?!?
