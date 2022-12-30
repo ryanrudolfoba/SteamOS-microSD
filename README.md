@@ -18,7 +18,7 @@ Several reasons why I did this -
 
 1. Perform BIOS / firmware updates which are usually only available when on the SteamOS beta / preview branch.
 2. Change to the beta / preview branch and perform testing without affecting the OS installed on the main drive.
-3. I haven't seen anyone install SteamOS on a microSD in a "clean" way. The closest I can find involves cloning an existing install to a microSD.
+3. I haven't seen anyone install SteamOS on a microSD in a "clean" way with updates working. The closest I can find involves cloning an existing install to a microSD.
 
 
 ## Requirements
