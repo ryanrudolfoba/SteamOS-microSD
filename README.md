@@ -8,6 +8,11 @@ This will mostly benefit Steam Deck users who are using Windows primarily on the
 
 The script is divided into two parts - modified SteamOS recovery script that installs directly to the microSD, and a post install script to allow SteamOS updates and to minimize writes to the sdcard.
 
+
+## Warning - Warning - Warning !!!
+The method only works if the internal SSD has no traces of SteamOS installed (dualboot or not). If SteamOS is already installed on the internal SSD, the microSD tries to mount those partitions too causing it to fail to boot! Currently the post install script cannot fix it, as this happens on the first boot after the initial SteamOS update. If you have SteamOS installed on the internal SSD, DO NOT use this script.
+
+
 ## Disclaimer
 
 1. Do this at your own risk!
@@ -52,7 +57,7 @@ Several reasons why I did this -
 
     ![image](https://user-images.githubusercontent.com/98122529/210011704-03fe588d-94fd-460e-8a5e-750dce98a7f0.png)
 
-10. Press Proceed on the dialog prompt. Wait until the reimage is complete.
+10. Press *Proceed* on the dialog prompt. Wait until the reimage is complete.
 
     ![image](https://user-images.githubusercontent.com/98122529/210011817-8d4a2495-8f75-44c3-95cb-2d0769f9d623.png)
 
@@ -60,7 +65,7 @@ Several reasons why I did this -
 
     ![image](https://user-images.githubusercontent.com/98122529/210011958-4aa53d56-ec83-4dca-9a99-814719b10524.png)
 
-12. Once the reimage is complete, press CANCEL on the prompt and then power off the Steam Deck.
+12. Once the reimage is complete, press *CANCEL* on the prompt and then power off the Steam Deck.
 
     ![image](https://user-images.githubusercontent.com/98122529/210012527-7f5ab7f4-d723-4091-93ec-589200d552a5.png)
 
@@ -129,19 +134,11 @@ The post install script will set the sudo password for the deck account. It will
 
     ![image](https://user-images.githubusercontent.com/98122529/210011557-6ba7290d-96e2-4760-b33c-5c6c5b75c1f7.png)
 
-9. Execute the post install script!
+9. Copy the ".profile" to home directory
 
-    cd SteamOS-microSD
-
-    ./post_install_sdcard.sh
-
-    ![image](https://user-images.githubusercontent.com/98122529/210035947-852151c1-d9dd-4d1f-8827-a3c2172e197c.png)
-
-10. After a few seconds the script will be complete and automatically power off the Steam Deck.
-
-    ![image](https://user-images.githubusercontent.com/98122529/210036025-4dea34c7-2ed2-4c8e-960c-4037f676d165.png)
-
-11. Repeat steaps 8 and 9 AFTER performing a SteamOS update, or AFTER switching between STABLE / BETA / PREVIEW builds. If you don't, there's a chance that SteamOS wiped the precautions I put to minimize writes to the sdcard, and future SteamOS updates might fail.
+```bash
+cp ~/SteamOS-microSD/.profile ~/
+```
 
 ## Verification
 
