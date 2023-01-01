@@ -8,6 +8,10 @@ This will mostly benefit Steam Deck users who are using Windows primarily on the
 The script is divided into two parts - modified SteamOS recovery script that installs directly to the microSD, and a post install script to allow SteamOS updates and to minimize writes to the sdcard.
 
 
+## Warning - Warning - Warning !!!
+The method only works if the internal SSD has no traces of SteamOS installed (dualboot or not). If SteamOS is already installed on the internal SSD, the microSD tries to mount those partitions too causing it to fail to boot! Currently the post install script cannot fix it, as this happens on the first boot after the initial SteamOS update. If you have SteamOS installed on the internal SSD, DO NOT use this script.
+
+
 ## Disclaimer
 1. Do this at your own risk!
 2. I will not be held responsible for data loss, broken sdcards etc etc.
