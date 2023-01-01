@@ -1,4 +1,15 @@
 #!/bin/bash
+
+# check if sudo password has been set for the deck account
+if [ "$(passwd --status deck | tr -s " " | cut -d " " -f 2)" == "P" ]; then
+	echo Sudo password is already set!
+else
+	echo Setting sudo password deck:deck
+	echo -e "deck\ndeck" | passwd deck &>/dev/null
+	sleep 2
+	echo Sudo password has been set!
+fi
+
 echo Deleting sdcard automount udev rule and unmount /run/media/var
 echo -e "deck\n" | sudo -S steamos-readonly disable &>/dev/null
 sudo rm /usr/lib/udev/rules.d/99-sdcard-mount.rules &>/dev/null
@@ -12,16 +23,6 @@ echo sdcard automount udev rule deleted!
 FILE=/etc/systemd/system/sdcard_minimize_write.service
 if [ ! -f "$FILE" ]; then
 	FIRST_RUN=true
-
-	# check if sudo password has been set for the deck account
-	if [ "$(passwd --status deck | tr -s " " | cut -d " " -f 2)" == "P" ]; then
-		echo Sudo password is already set!
-	else
-		echo Setting sudo password deck:deck
-		echo -e "deck\ndeck" | passwd deck &>/dev/null
-		sleep 2
-		echo Sudo password has been set!
-	fi
 
 	sleep 2
 
