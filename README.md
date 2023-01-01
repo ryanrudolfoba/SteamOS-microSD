@@ -26,7 +26,7 @@ If SteamOS is already installed on the internal SSD, the microSD tries to mount 
 
 ## But Why?!?
 
-Several reasons why I did this -
+Several reasons why I did this
 
 1. Perform BIOS / firmware updates which are usually only available when on the SteamOS beta / preview branch.
 2. Change to the beta / preview branch and perform testing without affecting the OS installed on the main drive.
@@ -40,6 +40,9 @@ Several reasons why I did this -
 4. Spare MicroSD plugged into the MicroSD slot - this is where SteamOS will be installed. Recommended size is at least 32GB A1 / A2 microSD card.
 
 ## Instructions
+
+> **Note**\
+> If instructed to "Power off" the Steam Deck and then turn on, do not simply "Restart" it.
 
 1. [Follow this steps to create the official SteamOS Recovery image.](https://help.steampowered.com/en/faqs/view/1b71-edf2-eb6d-2bb3)
 2. Once the SteamOS Recovery image is created, plug it in to the USB C port of the Steam Deck (or USB C hub / dock if you are using one).
@@ -128,7 +131,7 @@ The post install script will set the sudo password for the deck account. It will
     **↓ OPEN ANOTHER KONSOLE to run this command ↓**
 
     ```bash
-    sudo mkdir /run/media/root
+    sudo mkdir -p /run/media/root
     sudo mount /dev/mmcblk0p5 /run/media/root
     sudo cp ~/SteamOS-microSD/post_install_sdcard.sh /run/media/root/etc/profile.d/
     sudo umount /run/media/root
@@ -149,14 +152,15 @@ The post install script will set the sudo password for the deck account. It will
 1. While the Steam Deck is powered off, ***plug out the USB C drive that contains the SteamOS Recovery image.***
 1. Press the VOLDOWN + POWER button until you hear a chime.
 1. The boot menu will appear, select the microSD where SteamOS is installed and press A button (or enter on the keyboard).
-1. **It will auto shutdown *once* at the first boot.** Repeat the step 1-2.
 1. Wait until SteamOS loads. This will take about 1-2minutes depending on the speed of the sdcard.
 1. Go through the Greetings - language, timezone and WiFi connection.
 1. SteamOS will continue with the installation. Wait until this is finished.
+
     > **Note**\
     > It may stock at "Starting Steam Deck update download". \
     Wait at least about 3 minutes.\
-    If it's not progressing, shutdown the Steam Deck at the Steam menu, and then repeat the step 1-2.***
+    If it's not progressing, shutdown the Steam Deck at the Steam menu, and then repeat the step 1-2.
+
 1. Once completed the Steam Deck will automatically reboot and launch the OS installed on the internal SSD (Windows or SteamOS).
 1. Power off the Steam Deck and then proceed to Post Install Instructions.
 
