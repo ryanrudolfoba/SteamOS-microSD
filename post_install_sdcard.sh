@@ -22,25 +22,29 @@ FILE=/etc/systemd/system/sdcard_minimize_write.service
 if [ ! -f "$FILE" ]; then
 	FIRST_RUN=true
 
-	if [ ! -f "$HOME/.profile" ]; then
+	# Copy this script to user profile.
+	# SteamOS may overwrite all the partitions except home during OS update.
+	if [ ! -f "/home/deck/.profile" ]; then
 		cat >~/.profile <<EOF
 #!/bin/bash
 
 EOF
+		sudo chomod +x ~/.profile
 	fi
 
 	mkdir ~/.ryanrudolf &>/dev/null
-	if ! grep -qsFx "TARGET_FILE=/etc/profile.d/post_install_sdcard.sh" "$HOME/.profile"; then
+	if ! grep -qsFx "TARGET_FILE=/etc/profile.d/post_install_sdcard.sh" "/home/deck/.profile"; then
 
 		(cd ~/.ryanrudolf && curl -LJO https://github.com/jim60105/SteamOS-microSD/raw/main/post_install_sdcard.sh)
+		sudo chomod +x ~/.ryanrudolf/post_install_sdcard.sh
 
-		cat >~/.profile <<EOF
+		cat >/home/deck/.profile <<EOF
 
 SOURCE_FILE=~/.ryanrudolf/post_install_sdcard.sh
 TARGET_FILE=/etc/profile.d/post_install_sdcard.sh
 # Check if file not exists
 if [ ! -f "$TARGET_FILE" ] && [ -f "$SOURCE_FILE" ]; then
-    sudo cp $SOURCE_FILE $TARGET_FILE
+    echo -e "deck\n" | sudo -S cp $SOURCE_FILE $TARGET_FILE
     echo "post_install_sdcard.sh copied to /etc/profile.d/"
     sleep 10
     sudo reboot
@@ -48,8 +52,7 @@ fi
 EOF
 	fi
 
-	sleep 2
-
+	# Make the Minimize writes script.
 	cat >~/.ryanrudolf/sdcard_minimize_write.sh <<EOF
 #!/bin/bash
 for mountpoint in \$(mount | grep mmcblk0p | tr -s " " | cut -d " " -f 3)
@@ -57,21 +60,21 @@ do
 	mount -o rw,remount,noatime \$mountpoint
 	echo \$mountpoint has been remounted with noatime flag.
 done
-swapoff /home/swapfile
+swapoff /home/swapfile &> /dev/null
 umount /run/media/deck/var &> /dev/null
 exit 0
 EOF
 
-	chmod +x ~/.ryanrudolf/sdcard_minimize_write.sh
+	sudo chmod +x ~/.ryanrudolf/sdcard_minimize_write.sh
 	echo Script has been created!
 
+	# Create a service to run the script.
 	sudo rm /etc/systemd/system/sdcard_minimize_write.service
 	cat <<EOF | sudo tee -a /etc/systemd/system/sdcard_minimize_write.service &>/dev/null
 [Unit]
 Description=Minimize writes to the sdcard - set noatime flag and disable swap.
 
 [Service]
-Type=oneshot
 User=root
 ExecStart=/home/deck/.ryanrudolf/sdcard_minimize_write.sh
 
@@ -80,6 +83,8 @@ WantedBy=multi-user.target
 EOF
 	echo Service has been created: sdcard_minimize_write
 
+	# Create a service to unmount /run/media/var on startup.
+	# This is to continue the update process with a reboot in update mode.
 	# Modify from https://www.reddit.com/r/SteamDeck/comments/vn1nxt/how_to_install_steamos_to_the_microsd_card/
 	sudo rm /etc/systemd/system/microsd-umount.service
 	cat <<EOF | sudo tee -a /etc/systemd/system/microsd-umount.service &>/dev/null
@@ -87,7 +92,7 @@ EOF
 Description=Attempts to unmount /run/media/var up to 10 times on startup.
 
 [Service]
-Type=oneshot
+User=root
 ExecStart=/bin/bash -c "for i in {0..9}; do if mountpoint -q -- /run/media/var; then umount /run/media/var; else sleep 1; fi; done"
 
 [Install]
