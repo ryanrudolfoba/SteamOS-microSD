@@ -25,34 +25,7 @@ if [ ! -f "$FILE" ]; then
 
 	sleep 2
 
-	if [ ! -f "$HOME/.profile" ]; then
-		cat >~/.profile <<EOF
-#!/bin/bash
-
-EOF
-	fi
-
 	mkdir ~/.ryanrudolf &>/dev/null
-	if ! grep -qsFx "TARGET_FILE=/etc/profile.d/post_install_sdcard.sh" "$HOME/.profile"; then
-
-		(cd ~/.ryanrudolf && curl -LJO https://github.com/jim60105/SteamOS-microSD/raw/main/post_install_sdcard.sh)
-
-		cat >~/.profile <<EOF
-
-SOURCE_FILE=~/.ryanrudolf/post_install_sdcard.sh
-TARGET_FILE=/etc/profile.d/post_install_sdcard.sh
-# Check if file not exists
-if [ ! -f "$TARGET_FILE" ] && [ -f "$SOURCE_FILE" ]; then
-    sudo cp $SOURCE_FILE $TARGET_FILE
-    echo "post_install_sdcard.sh copied to /etc/profile.d/"
-    sleep 10
-    sudo reboot
-fi
-EOF
-	fi
-
-	sleep 2
-
 	cat >~/.ryanrudolf/sdcard_minimize_write.sh <<EOF
 #!/bin/bash
 for mountpoint in \$(mount | grep mmcblk0p | tr -s " " | cut -d " " -f 3)
