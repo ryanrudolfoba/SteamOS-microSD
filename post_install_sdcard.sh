@@ -18,41 +18,34 @@ sudo umount /run/media/var &>/dev/null
 sudo umount /run/media/deck/var &>/dev/null
 echo sdcard automount udev rule deleted!
 
-FILE=/etc/systemd/system/sdcard_minimize_write.service
-if [ ! -f "$FILE" ]; then
-	FIRST_RUN=true
-
-	# Copy this script to user profile.
-	# SteamOS may overwrite all the partitions except home during OS update.
-	if [ ! -f "/home/deck/.profile" ]; then
-		cat >~/.profile <<EOF
-#!/bin/bash
-
-EOF
-		sudo chomod +x ~/.profile
+service_exists() {
+	local n=$1
+	if [[ $(systemctl list-units --all -t service --full --no-legend "$n.service" | sed 's/^\s*//g' | cut -f1 -d' ') == $n.service ]]; then
+		return 0
+	else
+		return 1
 	fi
+}
 
-	mkdir ~/.ryanrudolf &>/dev/null
-	if ! grep -qsFx "TARGET_FILE=/etc/profile.d/post_install_sdcard.sh" "/home/deck/.profile"; then
-
-		SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
-		sudo cp "$SCRIPT_DIR/post_install_sdcard.sh" ~/.ryanrudolf/post_install_sdcard.sh
-		sudo chomod +x ~/.ryanrudolf/post_install_sdcard.sh
-
-		cat >/home/deck/.profile <<EOF
-
-SOURCE_FILE=~/.ryanrudolf/post_install_sdcard.sh
-TARGET_FILE=/etc/profile.d/post_install_sdcard.sh
-# Check if file not exists
-if [ ! -f "$TARGET_FILE" ] && [ -f "$SOURCE_FILE" ]; then
-    echo -e "deck\n" | sudo -S cp $SOURCE_FILE $TARGET_FILE
-    echo "post_install_sdcard.sh copied to /etc/profile.d/"
-    sleep 10
-    sudo reboot
+# Run this script in user profile.
+if [ ! -f "/home/deck/.profile" ]; then
+	touch /home/deck/.profile
+	sudo chomod +x /home/deck/.profile
 fi
-EOF
-	fi
 
+mkdir -p ~/.ryanrudolf &>/dev/null
+if ! grep -qsFx "ryanrudolf/post_install_sdcard.sh" "/home/deck/.profile"; then
+
+	SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+	sudo cp "$SCRIPT_DIR/post_install_sdcard.sh" ~/.ryanrudolf/post_install_sdcard.sh
+	sudo chomod +x ~/.ryanrudolf/post_install_sdcard.sh
+
+	cat >>/home/deck/.profile <<EOF
+~/.ryanrudolf/post_install_sdcard.sh
+EOF
+fi
+
+if ! service_exists sdcard_minimize_write; then
 	# Make the Minimize writes script.
 	cat >~/.ryanrudolf/sdcard_minimize_write.sh <<EOF
 #!/bin/bash
@@ -83,7 +76,9 @@ ExecStart=/home/deck/.ryanrudolf/sdcard_minimize_write.sh
 WantedBy=multi-user.target
 EOF
 	echo Service has been created: sdcard_minimize_write
+fi
 
+if ! service_exists microsd-umount; then
 	# Create a service to unmount /run/media/var on startup.
 	# This is to continue the update process with a reboot in update mode.
 	# Modify from https://www.reddit.com/r/SteamDeck/comments/vn1nxt/how_to_install_steamos_to_the_microsd_card/
@@ -103,13 +98,10 @@ EOF
 
 	sudo systemctl enable sdcard_minimize_write
 	sudo systemctl enable microsd-umount
-	echo Services has been enabled.
+	sudo systemctl start sdcard_minimize_write
+	sudo systemctl start microsd-umount
+	echo Services has been enabled and start.
 fi
 
 sudo steamos-readonly enable
-
-if [ "$FIRST_RUN" ]; then
-	echo Shutting down the Steam Deck.
-	sudo poweroff
-fi
 exit 0
