@@ -145,10 +145,14 @@ Several reasons why I did this
 
 ### /dev/mmcblk0p8 is mounted; will not make a filesystem here
 
+![Screenshot_20230101_124055](https://user-images.githubusercontent.com/16995691/210184088-393afff4-673c-4266-8f47-4f6f2224d6f6.png)
+
 To ensure that the partitions are not mounted before they are formatted, we can utilize the 'mkfs' command during the installation process. \
 This will prevent the recovery image OS from automatically mounting the partitions.
 
-![Screenshot_20230101_124055](https://user-images.githubusercontent.com/16995691/210184088-393afff4-673c-4266-8f47-4f6f2224d6f6.png)
+Just simply follow the next Question.👇
+
+### I just messed up my SDCard. How to reset it?
 
 1. Umount all the partition mounted.
 
@@ -175,8 +179,10 @@ This will prevent the recovery image OS from automatically mounting the partitio
     > Use 'w' to write the changes and exit.
     > I'm not going to explain in depth how to use fdisk. \
 
-3. Run mkfs.ext4 on the partition created.
+3. Run mkfs.ext4 to format the partition created.
 
     ```bash
     sudo mkfs.ext4 /dev/mmcblk0p1
     ```
+
+4. You can now go back to [instructions](#instructions) and start from step 9.
