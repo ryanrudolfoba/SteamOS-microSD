@@ -34,12 +34,15 @@ if [ ! -f "/home/deck/.profile" ]; then
 fi
 
 mkdir -p ~/.ryanrudolf &>/dev/null
-if ! grep -qsFx "ryanrudolf/post_install_sdcard.sh" "/home/deck/.profile"; then
 
+FILE=~/.ryanrudolf/post_install_sdcard.sh
+if [ ! -f "$FILE" ]; then
 	SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
-	sudo cp "$SCRIPT_DIR/post_install_sdcard.sh" ~/.ryanrudolf/post_install_sdcard.sh
-	sudo chomod +x ~/.ryanrudolf/post_install_sdcard.sh
+	sudo cp "$SCRIPT_DIR/post_install_sdcard.sh" $FILE
+	sudo chomod +x $FILE
+fi
 
+if ! grep -qsFx "ryanrudolf/post_install_sdcard.sh" "/home/deck/.profile"; then
 	cat >>/home/deck/.profile <<EOF
 ~/.ryanrudolf/post_install_sdcard.sh
 EOF
