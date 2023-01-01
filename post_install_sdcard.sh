@@ -31,11 +31,12 @@ if [ ! -f "$FILE" ]; then
 #!/bin/bash
 for mountpoint in \$(mount | grep mmcblk0p | tr -s " " | cut -d " " -f 3)
 do 
-	sudo mount -o rw,remount,noatime \$mountpoint
+	mount -o rw,remount,noatime \$mountpoint
 	echo \$mountpoint has been remounted with noatime flag.
 done
-sudo swapoff /home/swapfile
-sudo umount /run/media/deck/var &> /dev/null
+swapoff /home/swapfile
+umount /run/media/deck/var &> /dev/null
+exit 0
 EOF
 
 	chmod +x ~/.ryanrudolf/sdcard_minimize_write.sh
@@ -49,6 +50,7 @@ Description=Minimize writes to the sdcard - set noatime flag and disable swap.
 
 [Service]
 Type=oneshot
+User=root
 RemainAfterExit=true
 ExecStart=/home/deck/.ryanrudolf/sdcard_minimize_write.sh
 
