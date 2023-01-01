@@ -44,6 +44,10 @@ Several reasons why I did this
 > **Note**\
 > If instructed to "Power off" the Steam Deck and then turn on, do not simply "Restart" it.
 
+> **Note**\
+> The script will create a directory called .ryanrudolf. Don't delete this folder!
+> The script will set the sudo password for the deck account. It will be set as "deck" (without the quotation marks)
+
 1. [Follow this steps to create the official SteamOS Recovery image.](https://help.steampowered.com/en/faqs/view/1b71-edf2-eb6d-2bb3)
 2. Once the SteamOS Recovery image is created, plug it in to the USB C port of the Steam Deck (or USB C hub / dock if you are using one).
 3. While the Steam Deck is powered off, press the VOLDOWN + POWER button until you hear a chime.
@@ -77,75 +81,6 @@ Several reasons why I did this
 12. Once the reimage is complete, press *CANCEL* on the prompt to *NOT* reboot the Steam Deck.
 
     ![image](https://user-images.githubusercontent.com/98122529/210012527-7f5ab7f4-d723-4091-93ec-589200d552a5.png)
-
-## Install Post Install Script
-
-> **Note**\
-> The post install script will create a directory called .ryanrudolf. Don't delete this folder!
-
-> **Warning**\
-> If you skip this step, You may fail at Geetings.\
-> And you won't be able to perform SteamOS updates, unable to switch between STABLE / BETA / PREVIEW branches, and the precautions I put to minimize writes to the sdcard will not be implemented.
-
-The post install script will set the sudo password for the deck account. It will be set as "deck" (without the quotation marks)
-
-1. Check any mounted partitions by running `lsblk`.
-
-1. Unmount any mounted partitions under /dev/mmcblk0.
-
-    ![Screenshot_20230101_123542](https://user-images.githubusercontent.com/16995691/210184085-30417e05-a8ee-46ec-a8a5-86ab508752f3.png)
-
-    ```bash
-    sudo umount /dev/mmcblk0p6
-    sudo umount /dev/mmcblk0p7
-    sudo umount /dev/mmcblk0p8
-    ```
-
-1. Chroot into SteamOS.
-
-    ```bash
-    sudo ~/tools/repair_device.sh chroot
-    ```
-
-    *You should go into 'Part B'.*\
-    ![210183869-79fa4649-305a-46c6-8565-41a00d8d6428](https://user-images.githubusercontent.com/16995691/210185821-b76240a1-7527-4036-8a11-75c379a65818.png)\
-    If you are in part A run this command.
-
-    ```bash
-    steamos-chroot --disk /dev/mmcblk0 --partset B
-    ```
-
-1. Disable SteamOS read-only mode.
-
-    ```bash
-    steamos-readonly disable
-    ```
-
-    > **Warning**\
-    > **DO NOT EXIT THE CHROOT SHELL HERE!** \
-    > This *steamos-readonly* tool is buggy. It will enable read-only mode automatically but won't turn it to 'enable' state. Then you cannot disable it again because it's already in disabled state. And you cannot enable it because it's read-only. \
-    > So we MUST enable it before exit.
-
-1. Copy the post install script into profile.d
-
-    **↓ OPEN ANOTHER KONSOLE to run this command ↓**
-
-    ```bash
-    sudo mkdir -p /run/media/root
-    sudo mount /dev/mmcblk0p5 /run/media/root
-    sudo cp ~/SteamOS-microSD/post_install_sdcard.sh /run/media/root/etc/profile.d/
-    sudo umount /run/media/root
-    exit
-    ```
-
-1. **Back to the chroot shell** and enable SteamOS read-only mode.
-
-    ```bash
-    steamos-readonly enable
-    exit
-    ```
-
-1. Power off the Steam Deck and then proceed to First Boot.
 
 ## First Boot
 
