@@ -9,9 +9,9 @@ systemctl daemon-reload
 systemctl reset-failed
 
 # Try to unmount partitions
+sudo umount /dev/mmcblk0p8
 sudo umount /dev/mmcblk0p7
 sudo umount /dev/mmcblk0p6
-sudo umount /dev/mmcblk0p8
 
 echo Please press PROCEED at the first prompt to start.
 echo And press CANCEL on the next prompt to NOT to reboot the machine.

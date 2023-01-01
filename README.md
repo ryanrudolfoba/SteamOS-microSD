@@ -60,8 +60,7 @@ Several reasons why I did this -
 9. Execute the script!
 
     ```bash
-    cd SteamOS-microSD
-    ./install_sdcard.sh
+    ~/SteamOS-microSD/install_sdcard.sh
     ```
 
 10. Press *Proceed* on the dialog prompt. Wait until the reimage is complete.
@@ -78,15 +77,14 @@ Several reasons why I did this -
 
 ## Install Post Install Script
 
-> **Warning**\
-> If you skip this step, You may fail at Geetings.\
-  And you won't be able to perform SteamOS updates, unable to switch between STABLE / BETA / PREVIEW branches, and the precautions I put to minimize writes to the sdcard will not be implemented.
-
-The life of the sdcard might degrade quickly if you don't do this step!\
-The post install script will set the sudo password for the deck account. It will be set as "deck" (without the quotation marks)\
-
 > **Note**\
 > The post install script will create a directory called .ryanrudolf. Don't delete this folder!
+
+> **Warning**\
+> If you skip this step, You may fail at Geetings.\
+> And you won't be able to perform SteamOS updates, unable to switch between STABLE / BETA / PREVIEW branches, and the precautions I put to minimize writes to the sdcard will not be implemented.
+
+The post install script will set the sudo password for the deck account. It will be set as "deck" (without the quotation marks)
 
 1. Check any mounted partitions by running `lsblk`.
 
@@ -208,7 +206,8 @@ The post install script will set the sudo password for the deck account. It will
 
 ### /dev/mmcblk0p8 is mounted; will not make a filesystem here
 
-During the installation process, the recovery image OS automatically mounts the partitions after they are created but before they are formatted. To prevent this from happening, we need to run the 'mkfs' command.
+To ensure that the partitions are not mounted before they are formatted, we can utilize the 'mkfs' command during the installation process. \
+This will prevent the recovery image OS from automatically mounting the partitions.
 
 ![Screenshot_20230101_124055](https://user-images.githubusercontent.com/16995691/210184088-393afff4-673c-4266-8f47-4f6f2224d6f6.png)
 
@@ -217,14 +216,14 @@ During the installation process, the recovery image OS automatically mounts the 
     > Usee `lsblk` to check if there is any.
 
     ```bash
-    sudo umount /dev/mmcblk0p1
-    sudo umount /dev/mmcblk0p2
-    sudo umount /dev/mmcblk0p3
-    sudo umount /dev/mmcblk0p4
-    sudo umount /dev/mmcblk0p5
-    sudo umount /dev/mmcblk0p6
-    sudo umount /dev/mmcblk0p7
     sudo umount /dev/mmcblk0p8
+    sudo umount /dev/mmcblk0p7
+    sudo umount /dev/mmcblk0p6
+    sudo umount /dev/mmcblk0p5
+    sudo umount /dev/mmcblk0p4
+    sudo umount /dev/mmcblk0p3
+    sudo umount /dev/mmcblk0p2
+    sudo umount /dev/mmcblk0p1
     ```
 
 2. Delete all the partitions on the microSD card and created a new one.
@@ -233,9 +232,9 @@ During the installation process, the recovery image OS automatically mounts the 
     sudo fdisk /dev/mmcblk0
     ```
 
-    > I'm not going to explain deep about how to use fdisk. \
     > Use 'd' to delete partitions and 'n' to create a new one.\
     > Use 'w' to write the changes and exit.
+    > I'm not going to explain in depth how to use fdisk. \
 
 3. Run mkfs.ext4 on the partition created.
 
