@@ -44,7 +44,7 @@ EOF
 Description=Minimize writes to the sdcard - set noatime flag and disable swap.
 
 [Service]
-Type=simple
+Type=oneshot
 User=root
 ExecStart=/home/deck/.ryanrudolf/sdcard_minimize_write.sh
 
@@ -53,13 +53,14 @@ WantedBy=multi-user.target
 EOF
 	echo Service has been created: sdcard_minimize_write
 
-	# From https://www.reddit.com/r/SteamDeck/comments/vn1nxt/how_to_install_steamos_to_the_microsd_card/
+	# Modify from https://www.reddit.com/r/SteamDeck/comments/vn1nxt/how_to_install_steamos_to_the_microsd_card/
 	sudo rm /etc/systemd/system/microsd-umount.service
 	cat <<EOF | sudo tee -a /etc/systemd/system/microsd-umount.service &>/dev/null
 [Unit]
 Description=Attempts to unmount /run/media/var up to 10 times on startup.
 
 [Service]
+Type=oneshot
 ExecStart=/bin/bash -c "for i in {0..9}; do if mountpoint -q -- /run/media/var; then umount /run/media/var; else sleep 1; fi; done"
 
 [Install]
@@ -78,3 +79,4 @@ if [ "$FIRST_RUN" ]; then
 	echo Shutting down the Steam Deck.
 	sudo poweroff
 fi
+exit 0
