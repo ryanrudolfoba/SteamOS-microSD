@@ -6,7 +6,6 @@ if [ "$(passwd --status deck | tr -s " " | cut -d " " -f 2)" == "P" ]; then
 else
 	echo Setting sudo password deck:deck
 	echo -e "deck\ndeck" | passwd deck &>/dev/null
-	sleep 2
 	echo Sudo password has been set!
 fi
 
@@ -17,14 +16,11 @@ sudo udevadm control --reload
 sudo udevadm trigger
 sudo umount /run/media/var &>/dev/null
 sudo umount /run/media/deck/var &>/dev/null
-sleep 2
 echo sdcard automount udev rule deleted!
 
 FILE=/etc/systemd/system/sdcard_minimize_write.service
 if [ ! -f "$FILE" ]; then
 	FIRST_RUN=true
-
-	sleep 2
 
 	mkdir ~/.ryanrudolf &>/dev/null
 	cat >~/.ryanrudolf/sdcard_minimize_write.sh <<EOF
@@ -40,7 +36,6 @@ exit 0
 EOF
 
 	chmod +x ~/.ryanrudolf/sdcard_minimize_write.sh
-	sleep 2
 	echo Script has been created!
 
 	sudo rm /etc/systemd/system/sdcard_minimize_write.service
@@ -49,14 +44,14 @@ EOF
 Description=Minimize writes to the sdcard - set noatime flag and disable swap.
 
 [Service]
-Type=oneshot
+Type=simple
 User=root
-RemainAfterExit=true
 ExecStart=/home/deck/.ryanrudolf/sdcard_minimize_write.sh
 
 [Install]
 WantedBy=multi-user.target
 EOF
+	echo Service has been created: sdcard_minimize_write
 
 	# From https://www.reddit.com/r/SteamDeck/comments/vn1nxt/how_to_install_steamos_to_the_microsd_card/
 	sudo rm /etc/systemd/system/microsd-umount.service
@@ -70,15 +65,16 @@ ExecStart=/bin/bash -c "for i in {0..9}; do if mountpoint -q -- /run/media/var; 
 [Install]
 WantedBy=multi-user.target
 EOF
+	echo Service has been created: microsd-umount
 
 	sudo systemctl enable sdcard_minimize_write
 	sudo systemctl enable microsd-umount
+	echo Services has been enabled.
 fi
 
 sudo steamos-readonly enable
 
 if [ "$FIRST_RUN" ]; then
-	echo Shutting down the Steam Deck in 10 seconds.
-	sleep 10
+	echo Shutting down the Steam Deck.
 	sudo poweroff
 fi
