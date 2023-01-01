@@ -35,7 +35,8 @@ EOF
 	mkdir ~/.ryanrudolf &>/dev/null
 	if ! grep -qsFx "TARGET_FILE=/etc/profile.d/post_install_sdcard.sh" "/home/deck/.profile"; then
 
-		(cd ~/.ryanrudolf && curl -LJO https://github.com/jim60105/SteamOS-microSD/raw/main/post_install_sdcard.sh)
+		SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+		sudo cp "$SCRIPT_DIR/post_install_sdcard.sh" ~/.ryanrudolf/post_install_sdcard.sh
 		sudo chomod +x ~/.ryanrudolf/post_install_sdcard.sh
 
 		cat >/home/deck/.profile <<EOF
