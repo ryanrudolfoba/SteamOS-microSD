@@ -48,8 +48,6 @@ Several reasons why I did this -
 
     cd SteamOS-microSD
 
-    chmod +x install_sdcard.sh
-
     sudo ./install_sdcard.sh all
 
     ![image](https://user-images.githubusercontent.com/98122529/210011704-03fe588d-94fd-460e-8a5e-750dce98a7f0.png)
@@ -66,15 +64,47 @@ Several reasons why I did this -
 
     ![image](https://user-images.githubusercontent.com/98122529/210012527-7f5ab7f4-d723-4091-93ec-589200d552a5.png)
 
+13. Check any mounted partitions by running `lsblk`.
+
+14. Unmount any mounted partitions. For example: `sudo umount /run/media/var`
+
+15. Disable SteamOS read-only mode.
+
+    ```bash
+    sudo sudo ~/tools/repair_device.sh chroot
+    sudo steamos-readonly disable
+    ```
+
+16. Copy the post install script to profile.d
+    ***KEEP THE CHROOT SHELL AND OPEN ANOTHER KONSOLE to run this command***
+
+    ```bash
+    sudo mkdir /run/media/root
+    sudo mount /dev/mmcblk0p5 /run/media/root
+    sudo cp ~/SteamOS-microSD/post_install_sdcard.sh /run/media/root/etc/profile.d/
+    sudo umount /run/media/root
+    ```
+
+17. Back to the chroot shell and enable SteamOS read-only mode.
+
+    ```bash
+    sudo steamos-readonly enable
+    exit
+    ```
+
+18. Power off the Steam Deck and then proceed to First Boot.
+
 ## First Boot
 
 1. While the Steam Deck is powered off, press the VOLDOWN + POWER button until you hear a chime.
 2. The boot menu will appear, select the microSD where SteamOS is installed and press A button (or enter on the keyboard).
-3. Wait until SteamOS loads. This will take about 1-2minutes depending on the speed of the sdcard.
-4. Perform the initial setup - language, timezone and WiFi connection.
-5. SteamOS will continue with the installation. Wait until this is finished.
-6. Once completed the Steam Deck will automatically reboot and launch the OS installed on the internal SSD (Windows or SteamOS).
-7. Power off the Steam Deck and then proceed to Post Install Instructions.
+3. **It will auto shutdown once at the first boot.** Repeat the step 1-2.
+4. Wait until SteamOS loads. This will take about 1-2minutes depending on the speed of the sdcard.
+5. Perform the initial setup - language, timezone and WiFi connection.
+6. SteamOS will continue with the installation. Wait until this is finished.
+    ***Notice: It may stock at "Starting Steam Deck update download". Wait at least about 3 minutes. If it doesn't proceed, shutdown the Steam Deck at the Steam menu, and then repeat the step 1-2.***
+7. Once completed the Steam Deck will automatically reboot and launch the OS installed on the internal SSD (Windows or SteamOS).
+8. Power off the Steam Deck and then proceed to Post Install Instructions.
 
 ## Post Install Instructions - this is very important do not skip this step
 
@@ -102,8 +132,6 @@ The post install script will set the sudo password for the deck account. It will
 9. Execute the post install script!
 
     cd SteamOS-microSD
-
-    chmod +x post_install_sdcard.sh
 
     ./post_install_sdcard.sh
 
