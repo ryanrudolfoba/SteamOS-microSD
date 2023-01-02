@@ -6,22 +6,38 @@ This repository contains the instructions and scripts on how to install SteamOS 
 
 This will mostly benefit Steam Deck users who are using Windows primarily on the main internal SSD.
 
-The script is divided into two parts - modified SteamOS recovery script that installs directly to the microSD, and a post install script to allow SteamOS updates and to minimize writes to the sdcard.
+## What does this script do?
+
+- Install SteamOS to a microSD
+- Setup sudo password for the deck account (as "deck").
+- Delete microSD auto mount rules.
+- Unmount the microSD partitions (/run/media/var) that SteamOS tries to mount it and fails during OS update process.
+- Remount partitions as noatime mode to reduce microSD write operations.
+- Disable swap.
+- Run the above commands on every boot.
+- It will work on next SteamOS update. (Well, theoretically, need to test.)
+- All in one script!
 
 ## Warning
 
 > **Warning**\
 > The method only works if the internal SSD has no traces of SteamOS installed (dualboot or not).
 
-If SteamOS is already installed on the internal SSD, the microSD tries to mount those partitions too causing it to fail to boot! Currently the post install script cannot fix it, as this happens on the first boot after the initial SteamOS update. If you have SteamOS installed on the internal SSD, DO NOT use this script.
+If SteamOS is already installed on the internal SSD, the microSD tries to mount those partitions too causing it to fail to boot! Currently the post install script cannot fix it, as this happens on the first boot after the initial SteamOS update.
+
+> **Warning**\
+> If you have SteamOS installed on the internal SSD, DO NOT use this script.
+
+Again,\
+***If you have SteamOS installed on the internal SSD, DO NOT use this script.***
 
 
 ## Disclaimer
 
 1. Do this at your own risk!
-2. You **WILL** definitely lose all the data on SD card.\
-   You **MAY** lose data inside machine if you done something wrong.
-3. I will not be held responsible for data loss, broken sdcards etc etc.
+2. You **WILL** definitely lose all the data on microSD.\
+   You **MAY** lose data inside machine if you do something wrong.
+3. I will not be held responsible for data loss, broken microSDs etc.
 4. This is only for educational and research purposes only.
 
 ## But Why?!?
@@ -34,26 +50,27 @@ Several reasons why I did this
 
 ## Requirements
 
-1. SteamOS Recovery Image.
+1. [SteamOS Recovery Image](https://help.steampowered.com/en/faqs/view/1b71-edf2-eb6d-2bb3).
 2. USB flash drive for Steam Recovery Image. Recommended size is at least 8GB USB3.
 3. USB C hub / dock, keyboard and mouse. (Skip the USB C hub / dock if you are using a wireless keyboard and mouse).
-4. Spare MicroSD plugged into the MicroSD slot - this is where SteamOS will be installed. Recommended size is at least 32GB A1 / A2 microSD card.
+4. Spare MicroSD plugged into the MicroSD slot - this is where SteamOS will be installed. Recommended size is at least 32GB A1 / A2 microSD.
 
 ## Instructions
 
 > **Note**\
-> If instructed to "Power off" the Steam Deck and then turn on, do not simply "Restart" it.
+> If instructed to "Power off" the Steam Deck and then turn on, do not simply "Restart" it.\
+> "Restart" will bypass the boot menu and will boot the OS installed on the internal SSD.
 
-> **Note**\
-> The script will create a directory called .ryanrudolf. Don't delete this folder!
-> The script will set the sudo password for the deck account. It will be set as "deck" (without the quotation marks)
+> **Warning**\
+> The script will create a directory called .ryanrudolf. Don't delete this folder!\
+> The script will set the sudo password for the deck account as "deck" (without the quotation marks)
 
 1. [Follow this steps to create the official SteamOS Recovery image.](https://help.steampowered.com/en/faqs/view/1b71-edf2-eb6d-2bb3)
 2. Once the SteamOS Recovery image is created, plug it in to the USB C port of the Steam Deck (or USB C hub / dock if you are using one).
-3. While the Steam Deck is powered off, press the VOLDOWN + POWER button until you hear a chime.
+3. While the Steam Deck is powered off, press the "VOLDOWN + POWER" button until you hear a chime.
 4. The boot menu will appear, select the USB drive that contains the SteamOS Recovery image and press A button (or enter on the keyboard).
 5. Wait until the SteamOS recovery image boots into the desktop.
-6. Insert the microsd card where SteamOS will be installed - make sure it is at least a 32GB A1 / A2 card.
+6. Insert the microSD where SteamOS will be installed - make sure it is at least a 32GB A1 / A2 card.
 7. Connect the Steam Deck to your wifi connection.
 8. Open konsole terminal and clone this repository into your home directory.
 
@@ -74,7 +91,7 @@ Several reasons why I did this
 
     ![image](https://user-images.githubusercontent.com/98122529/210011817-8d4a2495-8f75-44c3-95cb-2d0769f9d623.png)
 
-11. Reimage in progress. This will take several minutes depending on the speed of the sdcard.
+11. Reimage in progress. This will take several minutes depending on the speed of the microSD.
 
     ![image](https://user-images.githubusercontent.com/98122529/210011958-4aa53d56-ec83-4dca-9a99-814719b10524.png)
 
@@ -85,19 +102,29 @@ Several reasons why I did this
 ## First Boot
 
 1. While the Steam Deck is powered off, ***plug out the USB C drive that contains the SteamOS Recovery image.***
-1. Press the VOLDOWN + POWER button until you hear a chime.
+1. Press the "VOLDOWN + POWER" button until you hear a chime.
 1. The boot menu will appear, select the microSD where SteamOS is installed and press A button (or enter on the keyboard).
-1. Wait until SteamOS loads. This will take about 1-2minutes depending on the speed of the sdcard.
+1. Wait until SteamOS loads. This will take about 1-2minutes depending on the speed of the microSD.
 1. Go through the Greetings - language, timezone and WiFi connection.
-1. SteamOS will continue with the installation. Wait until this is finished.
+1. SteamOS will continue with the installation.
 
     > **Note**\
-    > It may stock at "Starting Steam Deck update download". \
-    Wait at least about 3 minutes.\
-    If it's not progressing, shutdown the Steam Deck at the Steam menu, and then repeat the step 1-2.
+    > The "Remain 1 second." while installing is just a joke.\
+    > I think that's calculated based on SSD, not microSD.\
+    > So please wait until the installation is finished.
 
-1. Once completed the Steam Deck will automatically reboot and launch the OS installed on the internal SSD (Windows or SteamOS).
-1. Power off the Steam Deck and then proceed to Post Install Instructions.
+1. It may stock at "Starting Steam Deck update download". \
+   Wait at least about 3 minutes.\
+   If it's not progressing, *SHUTDOWN* the Steam Deck at the Steam menu, and then repeat the step 1-3.
+
+1. It may stock at "Black screen with a VALVE logo" after shutdown and boot up.\
+   This is part of the installation process, and it should take times.\
+   Wait at least about 5 minutes.\
+   If the fan has stopped functioning and you stock here, ***try pressing buttons A or B several times*** and waiting for a few minutes.\
+   I'm not sure exactly why this issue occurs, but in my experience this works.
+
+1. After the update progress is complete, you will be asked to login.\
+   We're done!
 
 ## Verification
 
@@ -143,16 +170,27 @@ Several reasons why I did this
 
 ## Trouble Shooting
 
+### The buttons are not working while Greetings
+
+I do not know why.\
+In my case only the touch screen works.\
+If you are unlucky, please connect the keyboard and mouse to operate it.
+
+In my case this problem only happens when Greetings.\
+After that everything works fine.
+
 ### /dev/mmcblk0p8 is mounted; will not make a filesystem here
 
 ![Screenshot_20230101_124055](https://user-images.githubusercontent.com/16995691/210184088-393afff4-673c-4266-8f47-4f6f2224d6f6.png)
 
-To ensure that the partitions are not mounted before they are formatted, we can utilize the 'mkfs' command during the installation process. \
-This will prevent the recovery image OS from automatically mounting the partitions.
+The partitions are mounted before formatting during the installation process.\
+This may happen when your microSD is formatted before and split into the same partition list.\
+Use *fdisk* to delete all the partitions and create a new one. And then format it.\
+This will prevent it from automatically mounting the partitions.
 
-Just simply follow the next Question.👇
+Just simply follow the next section.👇
 
-### I just messed up my SDCard. How to reset it?
+### I just messed up my microSD. How to reset it?
 
 1. Umount all the partition mounted.
 
@@ -169,7 +207,7 @@ Just simply follow the next Question.👇
     sudo umount /dev/mmcblk0p1
     ```
 
-2. Delete all the partitions on the microSD card and created a new one.
+2. Delete all the partitions on the microSD and created a new one.
 
     ```bash
     sudo fdisk /dev/mmcblk0
