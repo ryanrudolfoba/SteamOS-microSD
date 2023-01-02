@@ -19,6 +19,11 @@ sleep 3
 # Run the repair script.
 sudo ~/tools/repair_device_sdcard.sh all
 
+# Delete automount sdcard udev rule
+cmd echo "mount -o rw,remount / ; steamos-readonly disable; rm /usr/lib/udev/rules.d/99-sdcard-mount.rules" | steamos-chroot --disk /dev/mmcblk0 --partset A --
+
+cmd echo "mount -o rw,remount / ; steamos-readonly disable; rm /usr/lib/udev/rules.d/99-sdcard-mount.rules" | steamos-chroot --disk /dev/mmcblk0 --partset B --
+
 echo Start to insert script!
 
 # Mount home partition
