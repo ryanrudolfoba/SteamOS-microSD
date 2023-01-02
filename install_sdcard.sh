@@ -7,6 +7,7 @@ sudo umount /dev/mmcblk0p6
 
 # Modify the repair script to use mmcblk0 instead of nvme0n1.
 sed 's/nvme0n1/mmcblk0/g' ~/tools/repair_device.sh >~/tools/repair_device_sdcard.sh
+sudo chmod +x ~/tools/repair_device_sdcard.sh
 
 echo
 echo vvvvvvvvvv
