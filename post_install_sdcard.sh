@@ -42,7 +42,7 @@ if [ ! -f "$FILE" ]; then
 	sudo chomod +x $FILE
 fi
 
-if ! grep -qsFx "ryanrudolf/post_install_sdcard.sh" "/home/deck/.profile"; then
+if ! grep -qsF "ryanrudolf/post_install_sdcard.sh" "/home/deck/.profile"; then
 	cat >>/home/deck/.profile <<EOF
 ~/.ryanrudolf/post_install_sdcard.sh
 EOF
