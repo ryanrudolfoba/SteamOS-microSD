@@ -1,13 +1,5 @@
 #!/bin/bash
 
-# Disable udisks2
-sudo systemctl stop udisks2.service
-sudo systemctl disable udisks2.service
-sudo rm /etc/systemd/system/udisks2.service
-sudo rm /usr/lib/systemd/system/udisks2.service
-systemctl daemon-reload
-systemctl reset-failed
-
 # Try to unmount partitions
 sudo umount /dev/mmcblk0p8
 sudo umount /dev/mmcblk0p7
