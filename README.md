@@ -15,7 +15,8 @@ This will mostly benefit Steam Deck users who are using Windows primarily on the
 - Remount partitions as noatime mode to reduce microSD write operations.
 - Disable swap.
 - Run the above commands on every boot.
-- It will work on next SteamOS update. (Well, theoretically, need to test.)
+- It will work on next SteamOS update.
+  > 20230326: Sucessfully update SteamOS to version 3.4.6
 - All in one script!
 
 ## Warning
