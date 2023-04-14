@@ -30,7 +30,7 @@ service_exists() {
 # Run this script in user profile.
 if [ ! -f "/home/deck/.profile" ]; then
 	touch /home/deck/.profile
-	sudo chomod +x /home/deck/.profile
+	sudo chmod +x /home/deck/.profile
 fi
 
 mkdir -p ~/.ryanrudolf &>/dev/null
@@ -39,7 +39,7 @@ FILE=~/.ryanrudolf/post_install_sdcard.sh
 if [ ! -f "$FILE" ]; then
 	SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 	sudo cp "$SCRIPT_DIR/post_install_sdcard.sh" $FILE
-	sudo chomod +x $FILE
+	sudo chmod +x $FILE
 fi
 
 if ! grep -qsF "ryanrudolf/post_install_sdcard.sh" "/home/deck/.profile"; then
