@@ -1,5 +1,10 @@
 # How to Install SteamOS to a MicroSD
 
+<p align="center">
+  <a href="https://github.com/ryanrudolfoba/SteamOS-microSD/blob/main/README.zh-TW.md">中文</a> |
+  <span>English</span>
+</p>
+
 ## About
 
 This repository contains the instructions and scripts on how to install SteamOS to a microSD.
@@ -31,7 +36,6 @@ If SteamOS is already installed on the internal SSD, the microSD tries to mount 
 
 Again,\
 ***If you have SteamOS installed on the internal SSD, DO NOT use this script.***
-
 
 ## Disclaimer
 
@@ -216,7 +220,7 @@ Just simply follow the next section.👇
 
     > Use 'd' to delete partitions and 'n' to create a new one.\
     > Use 'w' to write the changes and exit.
-    > I'm not going to explain in depth how to use fdisk. \
+    > I'm not going to explain in depth how to use fdisk.
 
 3. Run mkfs.ext4 to format the partition created.
 
